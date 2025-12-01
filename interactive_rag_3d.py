@@ -319,173 +319,87 @@ SAMPLE_DOCUMENTS = {
 }
 
 RWTH_DOCUMENTS = {
-    # Cluster 1: Research Excellence
-    "Research Excellence - Interdisciplinary Research Initiatives": """
-RWTH Aachen University fosters interdisciplinary research initiatives as a core part of its Excellence Strategy. These initiatives aim to break traditional academic boundaries by integrating expertise from engineering, natural sciences, medicine, and humanities. They enhance innovation by pooling diverse perspectives and methodologies to address complex global challenges such as climate change, digitalization, and health technology. Emphasis is placed on creating collaborative environments that encourage experimental and applied research, aiming to heighten RWTH’s global competitiveness and impact. Funding and support structures are designed to facilitate project development, joint appointments, and resource sharing across faculties.
-""",
-    "Research Excellence - Sustainable Energy Systems": """
-Sustainable energy systems represent a priority research area aligned with RWTH’s commitment to societal impact and innovation. The university integrates advanced technological research with environmental science to develop renewable energy solutions and smart grid technologies. RWTH’s research in solar power, wind energy, and energy storage aims to contribute to the global transition to carbon-neutral economies. Collaboration with industry partners and international research networks accelerates technology transfer. The Excellence Strategy ensures sustained investment in state-of-the-art laboratories and interdisciplinary teams to keep RWTH at the forefront of energy research.
-""",
-    "Research Excellence - Digital Transformation and AI": """
-Digital transformation and artificial intelligence are central to RWTH's research agenda within the Excellence Strategy framework. Research efforts emphasize algorithm development, machine learning, robotics, and data science applications across disciplines. RWTH promotes innovation ecosystems that integrate academia, startups, and industrial partners to accelerate AI-driven technologies. Ethical considerations and societal impacts of AI are analyzed through multidisciplinary projects combining technology with social sciences and law. Persistent funding and strategic partnerships enable RWTH to expand its leadership role in Germany’s digital innovation landscape.
-""",
-    "Research Excellence - Biomedical Engineering Innovations": """
-Biomedical engineering is a strategic research focus at RWTH Aachen, advancing healthcare technologies and personalized medicine. The Excellence Strategy supports projects that develop cutting-edge diagnostic tools, biomaterials, and medical devices through collaborative efforts between engineering and medical faculties. Research groups emphasize translational approaches that rapidly move innovations from lab to clinical application. Partnerships with hospitals, biotech companies, and international research centers strengthen RWTH’s position as a nexus for biomedical innovation. Investments in infrastructure and talent development sustain growth in this high-impact field.
-""",
-    "Research Excellence - Material Science and Nanotechnology": """
-RWTH excels in material science and nanotechnology research by exploring novel materials for energy storage, electronics, and structural applications. The Excellence Strategy prioritizes high-risk, high-reward projects that pioneer new synthesis methods and characterization techniques at the nanoscale. Multidisciplinary teams work on applications ranging from lightweight composites to quantum materials. The university leverages its central location and infrastructure to form research clusters integrating chemistry, physics, and engineering disciplines. Extensive collaboration with industry partners drives innovation and facilitates commercialization of advanced materials technologies.
-""",
-
-    # Cluster 2: Teaching and Education Innovation
-    "Teaching and Education - Curriculum Modernization": """
-One of the pillars of the RWTH Excellence Strategy focuses on curriculum modernization to equip students for a rapidly changing labor market. This involves integrating digital competencies, interdisciplinary content, and practical project work into existing degree programs. RWTH actively engages faculty and students in redesigning courses to foster critical thinking, creativity, and collaboration. The modernization project includes enhanced use of blended learning tools, flexible modular structures, and incorporation of sustainability topics across disciplines. These efforts aim to strengthen RWTH’s educational quality and relevance on the global stage.
-""",
-    "Teaching and Education - Internationalization of Degree Programs": """
-Internationalization is a core element of RWTH’s teaching strategy, aiming to attract global talent and offer students intercultural competence. RWTH promotes joint and dual degree programs in collaboration with top-tier international universities. Language support, international internships, and study abroad opportunities are systematically expanded to increase students’ global readiness. Digital technologies support virtual exchange formats, enabling cross-border learning experiences. The Excellence Strategy supports these initiatives to make RWTH a preferred destination for international students and scholars.
-""",
-    "Teaching and Education - Digital Learning Environments": """
-The transformation to digital learning environments is a key focus area for RWTH under its Excellence Strategy. The university invests in state-of-the-art digital platforms, interactive teaching tools, and virtual laboratories to enhance student engagement and accessibility. Faculty development programs encourage innovative pedagogies including flipped classrooms and adaptive learning. RWTH also addresses digital equity by providing infrastructure support to all students. These initiatives aim to improve learning outcomes while preparing students for a digital-first world in academia and industry.
-""",
-    "Teaching and Education - Student-Centered Learning Approaches": """
-RWTH prioritizes student-centered learning by promoting active learning, peer collaboration, and personalized feedback. The Excellence Strategy integrates new assessment models that emphasize critical thinking and problem-solving over rote memorization. Mentorship programs and learning analytics are utilized to monitor and support individual student progress. Efforts to foster inclusive and supportive learning environments ensure that diverse student needs are addressed. This approach aligns with RWTH’s mission to produce graduates who are adaptive, innovative, and socially responsible.
-""",
-    "Teaching and Education - Lifelong Learning and Continuing Education": """
-Recognizing the importance of lifelong learning, RWTH offers a broad portfolio of continuing education courses tailored to professionals and industry partners. These programs cover emerging technologies, management skills, and interdisciplinary topics to support career development and knowledge transfer. The Excellence Strategy promotes flexible formats including online and hybrid courses to increase accessibility. Cooperation with local and global enterprises enhances relevance and practical application. This commitment strengthens RWTH’s role as a hub for ongoing professional education and innovation dissemination.
-""",
-
-    # Cluster 3: Infrastructure & Innovation Ecosystem
-    "Infrastructure & Innovation - Research Facilities Modernization": """
-Modern, cutting-edge research facilities form a cornerstone of RWTH Aachen’s Excellence Strategy. Investments focus on upgrading laboratories, creating high-tech centers, and expanding shared equipment platforms across faculties. The modernization effort supports advanced experimental research and large-scale collaborative projects that demand specialized infrastructure. Emphasis on sustainability and energy efficiency reflects RWTH’s commitment to responsible campus development. By enhancing its physical infrastructure, RWTH aims to attract top researchers and foster innovative breakthroughs.
-""",
-    "Infrastructure & Innovation - Innovation Hubs and Technology Transfer": """
-Innovation hubs at RWTH foster close collaboration between academia and industry to accelerate technology transfer and entrepreneurship. The Excellence Strategy endorses creation and expansion of interdisciplinary spaces like startup incubators, co-working labs, and maker spaces. Dedicated support services assist researchers in patenting, business development, and networking. These hubs strengthen RWTH’s ecosystem by promoting knowledge exchange, commercialization of research, and regional economic growth. They embody the university’s ambition to translate scientific excellence into societal value.
-""",
-    "Infrastructure & Innovation - Digital Campus Initiatives": """
-The digital campus initiative at RWTH integrates cutting-edge ICT infrastructure with smart services to optimize teaching, research, and administration. The Excellence Strategy promotes campus-wide deployment of high-speed networks, cloud computing resources, and digital identity management. Smart building technology enhances energy efficiency and user comfort. Integration of virtual reality tools supports immersive learning and remote collaboration. The digital campus creates a connected environment that increases productivity and quality of campus life while fostering innovation.
-""",
-    "Infrastructure & Innovation - Sustainability in Campus Development": """
-Sustainability principles are embedded in RWTH’s campus development and infrastructure projects under the Excellence Strategy. Green building standards, renewable energy installations, and waste reduction practices guide construction and maintenance. The university actively monitors carbon footprint and implements measures to achieve climate neutrality. Sustainable mobility concepts, including bike-sharing and electric vehicle infrastructure, reduce environmental impact. These initiatives showcase RWTH’s dedication to ecological responsibility and set an example for the academic community.
-""",
-    "Infrastructure & Innovation - Collaborative Research Networks": """
-RWTH Aachen strategically builds collaborative research networks at local, national, and international levels. These networks enable resource sharing, joint grant applications, and shared scientific agendas. The Excellence Strategy supports the creation of centers of excellence and thematic alliances that bring together multiple stakeholders. Collaboration with industry partners, governmental agencies, and other universities strengthens RWTH’s research capacity and global visibility. These networks foster interdisciplinary synergies and accelerate innovation cycles.
-""",
-
-    # Cluster 4: Talent and Diversity
-    "Talent and Diversity - Female Leadership Advancement": """
-Promoting female leadership within RWTH Aachen is a priority dimension of the Excellence Strategy. The university implements mentoring, career development, and networking programs tailored to women academics and researchers. Specific measures include targeted hiring initiatives, flexible working arrangements, and gender-sensitive evaluation processes. By increasing female representation in leadership positions, RWTH aims to foster diversity that enhances innovation and decision-making quality. These efforts contribute to creating an inclusive academic culture that supports equal opportunity.
-""",
-    "Talent and Diversity - International Faculty Recruitment": """
-International recruitment of top academic talent is actively pursued to enhance RWTH’s global research and teaching profile. The Excellence Strategy encompasses strategies such as attractive employment packages, relocation support, and integration programs. Multilingual and intercultural competence training helps new faculty feel welcomed and effective. Recruitment efforts target emerging fields and strategic research areas, ensuring a diverse and highly qualified workforce. Internationalization of faculty strengthens RWTH’s competitiveness and global networks.
-""",
-    "Talent and Diversity - Support for Early Career Researchers": """
-Supporting early career researchers is essential for sustainable excellence at RWTH Aachen. The university provides structured programs including fellowships, career workshops, and mentorship to promote academic independence. The Excellence Strategy focuses on transparent recruitment, balanced workload, and networking opportunities. Doctoral candidates receive tailored training in research skills, responsible conduct, and interdisciplinary collaboration. These initiatives help nurture the next generation of leaders in science and innovation.
-""",
-    "Talent and Diversity - Inclusive Academic Culture": """
-RWTH promotes an inclusive academic culture that respects and values diversity across all dimensions including ethnicity, disability, and socio-economic background. The Excellence Strategy targets bias reduction through awareness campaigns, training programs, and accessible infrastructure improvements. Support services such as counseling, language assistance, and peer groups ensure equitable participation. The university fosters a welcoming environment that maximizes the contributions of all community members to academic success and societal engagement.
-""",
-    "Talent and Diversity - Intercultural Competence Development": """
-Intercultural competence is fostered at RWTH through curricular and extracurricular activities, supporting both international and domestic community members. Language courses, cultural workshops, and international networking events enhance mutual understanding and collaboration. The Excellence Strategy embeds intercultural communication skills as part of student and staff development. These efforts enable RWTH to thrive as a culturally diverse institution prepared for global challenges and cooperation.
-""",
-
-    # Cluster 5: Societal Impact and Sustainability
-    "Societal Impact - Regional Innovation and Economic Development": """
-RWTH Aachen plays a vital role in driving regional innovation and economic development, aligning with its Excellence Strategy priorities. The university collaborates with local businesses, government, and civil society to foster technology-driven startups and enhance workforce skills. Innovation parks and knowledge transfer offices serve as catalysts for entrepreneurship and commercialization. Social responsibility and sustainable economic growth are promoted through inclusive policies and community engagement. RWTH’s impact extends beyond academia, contributing significantly to the prosperity of the region.
-""",
-    "Societal Impact - Sustainable Urban Development Research": """
-Research on sustainable urban development is a key societal challenge addressed by RWTH through interdisciplinary approaches. Combining expertise in architecture, civil engineering, environmental science, and social sciences, RWTH develops innovative solutions for smart cities, green infrastructures, and mobility systems. The Excellence Strategy supports projects that emphasize resilience, climate adaptation, and citizen participation. Collaborations with city administrations and planners facilitate real-world implementation. This focus enhances RWTH’s contributions to global urban sustainability goals.
-""",
-    "Societal Impact - Public Engagement and Science Communication": """
-RWTH prioritizes public engagement and science communication as part of its mission in the Excellence Strategy. The university organizes events, open lectures, and outreach programs designed to increase science literacy and dialogue with diverse audiences. Digital platforms and media collaborations extend reach and inclusivity. Scientists are encouraged and trained to communicate their research in accessible language, fostering trust and societal relevance. These initiatives strengthen the relationship between RWTH and the wider community, promoting mutual benefit.
-""",
-    "Societal Impact - Ethics and Responsibility in Research": """
-Ethics and social responsibility are embedded in RWTH’s research activities under its Excellence Strategy. The university maintains rigorous review processes for research involving human subjects, animal welfare, and data protection. Interdisciplinary ethics committees provide guidance on emerging issues such as AI ethics and sustainability. Training programs raise awareness among staff and students about responsible research conduct. RWTH aims to balance scientific advancement with ethical considerations to ensure positive societal outcomes.
-""",
-    "Societal Impact - Climate Action and Environmental Responsibility": """
-Climate action is a foundational component of RWTH Aachen’s strategy for sustainable development. The university integrates research, teaching, and operations to reduce environmental impact and foster climate resilience. Projects address renewable energy, climate modeling, sustainable materials, and policy analysis. Student initiatives and collaborations with NGOs amplify awareness and action on campus and beyond. RWTH commits to measurable targets for carbon neutrality and resource efficiency, contributing actively to global climate protection efforts.
-""",
-
-    # Cluster 6: Governance and Strategic Development
-    "Governance and Strategy - Excellence Strategy Implementation": """
-RWTH Aachen employs a comprehensive governance structure to implement its Excellence Strategy, involving multiple stakeholder groups. Transparent decision-making processes, clear responsibilities, and regular evaluation ensure alignment with strategic goals. Steering committees, working groups, and advisory boards coordinate activities related to research, teaching, and infrastructure. The strategy emphasizes agility to adapt to emerging trends and funding opportunities. Effective governance underpins RWTH’s sustained trajectory toward academic and institutional excellence.
-""",
-    "Governance and Strategy - Strategic Partnerships and Collaborations": """
-Strategic partnerships form a key element in RWTH’s approach to strengthening research and education under the Excellence Strategy. Collaborations with leading universities, research institutions, and industry players worldwide enhance knowledge exchange and resource mobilization. International consortia and joint projects widen RWTH’s impact and visibility. The university actively pursues long-term alliances that align with its priority fields and values. These partnerships create synergies that drive innovation and global competitiveness.
-""",
-    "Governance and Strategy - Data-Driven Decision Making": """
-Data-driven decision making is increasingly integrated into RWTH’s governance practices to optimize institutional performance. The Excellence Strategy promotes adoption of analytics tools for monitoring research outputs, teaching quality, and resource utilization. Data transparency supports evidence-based policy development and strategic planning. Dashboards and reporting systems enable real-time insights for leadership and faculty. This approach enhances accountability, efficiency, and continuous improvement within the university.
-""",
-    "Governance and Strategy - Risk Management in Research and Education": """
-Proactive risk management is embedded in RWTH’s strategic planning aligned with its Excellence Strategy. The university identifies and mitigates risks related to funding fluctuations, regulatory changes, and technological disruptions. Risk assessment frameworks guide project selection and resource allocation to ensure sustainable results. Crisis preparedness plans address scenarios including data breaches, safety incidents, and reputational risks. Robust management of risks strengthens RWTH’s resilience and capacity to maintain excellence under changing conditions.
-""",
-    "Governance and Strategy - Quality Assurance and Accreditation": """
-Quality assurance mechanisms at RWTH ensure high standards in research and education consistent with the Excellence Strategy. Periodic internal and external reviews assess teaching effectiveness, research impact, and administrative processes. Accreditation procedures validate degree programs meeting national and international criteria. Continuous feedback loops engage faculty, students, and stakeholders to foster improvement. These processes support RWTH’s commitment to excellence, transparency, and competitiveness in a dynamic academic environment.
-""",
-
-    # Cluster 7: Digital Innovation and Industry 4.0
-    "Digital Innovation - Industry 4.0 and Smart Manufacturing": """
-Industry 4.0 represents a transformative focus area within RWTH’s research and innovation agenda. The university drives advances in smart manufacturing, cyber-physical systems, and automation technologies that enhance industrial productivity and flexibility. Cross-disciplinary collaborations connect electrical engineering, computer science, and mechanical engineering. RWTH’s facilities enable prototyping and testing of innovative solutions alongside industrial partners. The Excellence Strategy supports scaling these technologies for practical deployment, strengthening the manufacturing sector regionally and globally.
-""",
-    "Digital Innovation - Internet of Things (IoT) Research and Application": """
-The Internet of Things (IoT) ecosystem is a priority research domain at RWTH Aachen, addressing connectivity, sensor technology, and data analytics. The Excellence Strategy fosters integrated projects that apply IoT solutions in smart cities, healthcare, logistics, and energy management. RWTH encourages collaboration with startups and large enterprises to accelerate market-ready innovations. Emphasis on security, interoperability, and sustainability guides development efforts. IoT research contributes to RWTH’s ambition to lead in digital transformation and societal progress.
-""",
-    "Digital Innovation - Cybersecurity and Data Protection": """
-Cybersecurity and data protection are critical components of RWTH’s digital innovation initiatives within the Excellence Strategy. Research focuses on cryptography, secure software development, and privacy-preserving technologies. RWTH maintains robust IT infrastructure to protect academic and administrative data integrity. Collaboration with government agencies and industry enhances response capacity to emerging cyber threats. Training programs build awareness among students and staff, ensuring a resilient digital ecosystem aligned with ethical and legal standards.
-""",
-    "Digital Innovation - Big Data Analytics and Cloud Computing": """
-RWTH leverages big data analytics and cloud computing to enable cutting-edge research and flexible educational delivery. The Excellence Strategy supports development of scalable data platforms and high-performance computing resources. Multidisciplinary projects utilize large datasets for insights in areas such as physics, social sciences, and urban planning. Cloud services facilitate virtual labs, collaborative tools, and remote access. These digital capabilities expand RWTH’s research horizons and enhance operational efficiency across the institution.
-""",
-    "Digital Innovation - Robotics and Autonomous Systems": """
-Robotics and autonomous systems research at RWTH advances automation in manufacturing, mobility, and service sectors. The Excellence Strategy funds projects integrating AI, control theory, and sensor technologies to create intelligent machines capable of complex tasks. RWTH’s robotic labs provide environments for testing and collaboration with industry. Ethical implications and human-robot interaction studies complement technical development. This research area strengthens RWTH’s position as a leader in next-generation intelligent systems.
-""",
-
-    # Cluster 8: Health Sciences and Medical Research
-    "Health Sciences - Translational Medicine and Clinical Research": """
-RWTH emphasizes translational medicine to bridge basic research with clinical applications under the Excellence Strategy. Interdisciplinary teams integrate molecular biology, imaging, and patient care to accelerate development of new diagnostics and therapies. The university collaborates with university hospitals and biotech companies for clinical trials and innovation transfer. Infrastructure investments facilitate data sharing and advanced clinical research methodologies. This approach enhances RWTH’s impact on health outcomes and medical advancement.
-""",
-    "Health Sciences - Precision Medicine and Genomics": """
-Precision medicine is prioritized within RWTH’s health sciences research to tailor treatments based on individual genetic profiles. Projects focus on genomics, bioinformatics, and biomarker discovery. The Excellence Strategy supports integration of big data from patient cohorts and experimental studies to drive personalized healthcare solutions. RWTH collaborates with national and international consortia to enhance research scale and quality. These efforts contribute to breakthroughs in cancer therapy, rare diseases, and preventive medicine.
-""",
-    "Health Sciences - Public Health and Epidemiology": """
-Public health and epidemiology research at RWTH addresses population health challenges and disease prevention strategies. The Excellence Strategy promotes data-driven studies on health behavior, environmental impacts, and health policy evaluation. Interdisciplinary cooperation with social sciences and engineering enriches research methodologies. Results inform evidence-based policy making and community health interventions. RWTH aims to strengthen its role as a contributor to improving public health regionally and globally.
-""",
-    "Health Sciences - Biomedical Informatics and Health IT": """
-Biomedical informatics and health IT are at the forefront of RWTH's efforts to modernize healthcare data management and analysis. The Excellence Strategy supports development of electronic health records, decision support systems, and telemedicine platforms. RWTH engages experts in computer science, medicine, and law to ensure security, interoperability, and usability of healthcare technologies. Collaboration with hospitals enhances practical application and impacts patient care quality. This domain exemplifies the integration of digital innovation with medicine.
-""",
-    "Health Sciences - Neurosciences and Cognitive Research": """
-Neurosciences and cognitive research represent a dynamic field at RWTH, investigating brain function, neurodegenerative diseases, and cognition. The Excellence Strategy promotes cutting-edge experimental techniques including neuroimaging, electrophysiology, and computational modeling. Multidisciplinary teams combine psychology, biology, engineering, and computer science perspectives. Research outcomes contribute to clinical treatments, rehabilitation, and artificial intelligence developments inspired by human cognition. RWTH fosters international collaboration and state-of-the-art facilities to sustain leadership in neuroscience.
-""",
-
-    # Additional Topics
-    "Sustainability - Circular Economy Research": """
-RWTH Aachen advances circular economy research aimed at reducing waste and promoting sustainable resource management. The Excellence Strategy supports projects developing innovative recycling technologies, sustainable materials, and product life-cycle analysis. Interdisciplinary collaborations connect engineering, economics, and environmental sciences. The university works with industry and policymakers to implement circular economy principles in practice. This research not only fosters sustainability but also creates new economic opportunities aligned with global environmental goals.
-""",
-    "Sustainability - Water Resource Management": """
-Water resource management is a critical area of RWTH’s research focusing on sustainable use, pollution control, and climate adaptation strategies. The Excellence Strategy promotes integrated approaches combining hydrology, engineering, and environmental policy. RWTH develops advanced monitoring technologies, modeling tools, and treatment systems. Partnerships support implementation of sustainable water infrastructure in urban and rural contexts. This work contributes to global efforts addressing water scarcity and quality challenges.
-""",
-    "Sustainability - Environmental Policy and Governance": """
-RWTH conducts leading research in environmental policy and governance aimed at supporting sustainable development transitions. The Excellence Strategy encourages analysis of regulatory frameworks, stakeholder participation, and economic incentives. Interdisciplinary teams link social sciences, law, and natural sciences to evaluate policy effectiveness and design innovative governance models. This research informs decision-making at local, national, and international levels. RWTH’s expertise strengthens societal capacity to address environmental challenges.
-""",
-    "Sustainability - Renewable Materials Innovation": """
-Innovation in renewable materials is a strategic research area at RWTH supporting the transition away from fossil-based resources. The Excellence Strategy funds projects on bio-based polymers, composites, and sustainable manufacturing processes. Collaboration with industry partners accelerates development and commercialization. RWTH integrates materials science, chemistry, and engineering to create high-performance, eco-friendly products. These innovations contribute to sustainable production and consumption patterns worldwide.
-""",
-    "Sustainability - Energy Efficiency in Buildings": """
-RWTH focuses on improving energy efficiency in buildings through research on insulation materials, smart control systems, and renewable energy integration. The Excellence Strategy promotes interdisciplinary approaches involving architecture, engineering, and computer science. Pilot projects demonstrate new technologies in real-world environments. RWTH’s sustainable building research supports efforts to reduce carbon emissions and operational costs. This field exemplifies the university’s commitment to practical sustainability solutions.
-""",
-    "Communication - Academic Networking and Conferences": """
-Academic networking and conferences are vital tools RWTH employs to promote collaboration and knowledge dissemination. The Excellence Strategy supports organizing international symposia, workshops, and seminars that bring together experts from various fields. These events facilitate exchange of ideas, foster partnerships, and enhance RWTH’s visibility in the global academic community. Digital conference formats expand participation and accessibility. Strong networking underpins RWTH’s interdisciplinary research ambitions and reputation.
-""",
-    "Communication - Alumni Engagement and Outreach": """
-Alumni engagement is a key aspect of RWTH’s strategy to build lasting relationships with graduates and leverage their expertise and networks. The Excellence Strategy funds initiatives such as alumni clubs, career mentoring programs, and fundraising campaigns. Regular communication and involvement opportunities keep alumni connected to campus developments. Their contributions enrich academic programs and provide valuable feedback. Active alumni networks enhance RWTH’s social capital and global reach.
-""",
-    "Communication - Media Relations and Publicity": """
-RWTH cultivates proactive media relations and publicity to highlight its achievements and strategic priorities. The Excellence Strategy supports dedicated communication teams that produce press releases, feature articles, and social media content. Clear and timely communication boosts RWTH’s public image and helps attract students, faculty, and partners. Crisis communication protocols ensure preparedness for managing reputational risks. Effective media relations are essential to projecting RWTH as a top-tier research university.
-""",
-    "Communication - Internal Communication and Staff Engagement": """
-Internal communication at RWTH seeks to foster transparency, collaboration, and motivation among staff and faculty. The Excellence Strategy promotes use of digital platforms, newsletters, and regular town-hall meetings. Feedback mechanisms allow staff input into decision-making and strategic development. Engagement initiatives support wellbeing and professional growth. Strong internal communication strengthens RWTH’s institutional culture and operational effectiveness.
-""",
-    "Communication - Science Education and Outreach for Schools": """
-Teaching science to school students and promoting STEM education is a strategic outreach activity for RWTH. The Excellence Strategy funds programs that provide workshops, lab visits, and mentoring aimed at young learners. Partnerships with schools and educational organizations create pathways to higher education and research careers. These activities increase interest in science and technology and foster inclusion of underrepresented groups. RWTH’s school outreach efforts contribute to long-term societal innovation capacity.
-""",
+    "Teaching - Research-Oriented Curriculum": """
+    RWTH integrates cutting-edge research topics directly into teaching through a two-phase approach. In 'Scientific Principles', all students learn foundational methodology, scientific writing, ethics, and academic integrity. The second phase, 'Research Orientation', offers individualized opportunities such as research assistantships and voluntary project modules. Top students are recognized via Dean’s Lists and may be nominated for the German Academic Scholarship Foundation. A coherent quality management system with measurable objectives ensures regular curriculum evaluation and adaptation, aligning teaching with RWTH’s status as an Excellence University.
+    """,
+    "Teaching - Digitalization Strategy for Learning": """
+    RWTH’s digitalization strategy aims to scale individualized research-oriented teaching with a rich mix of online formats. Courses are supplemented with Open Educational Resources and Creative Commons-licensed research material. Learning Analytics Services and educational data mining support optimized learning and teaching strategies, integrated via platforms like RWTHmoodle and Dynexite. The approach prioritizes student autonomy and accessibility, leveraging technology to enhance the visibility and reach of RWTH’s research while maintaining high quality standards in content delivery.
+    """,
+    "Teaching - Lifelong Learning": """
+    In line with the Excellence Strategy, RWTH promotes lifelong learning for alumni, professionals, and non-traditional learners. Programs include tailored continuing education modules, industry collaborations, and hybrid learning environments. The infrastructure and curriculum reforms support flexible pathways, facilitating skill acquisition in areas such as AI ethics, sustainability, and global mobility. Lifelong engagement strengthens RWTH’s societal impact and creates enduring connections between academic knowledge and real-world application.
+    """,
+    "Teaching - Challenge-Based Learning": """
+    RWTH implements modern pedagogical approaches, such as challenge-based and co-creation models, where students tackle real societal or industry problems in interdisciplinary teams. Courses integrate sustainability themes, digital tools, and inclusivity into collaborative problem-solving. These innovations encourage creativity, agency, and resilience while fostering technical and interpersonal competencies. Industry partners and civic actors are embedded within learning environments to enhance relevance and practical impact.
+    """,
+    "Teaching - Internationalization in Academic Programs": """
+    By 2024, 60% of new master programs at RWTH are taught partially or fully in English, increasing accessibility to international students. Existing courses have expanded English-language offerings to 43%. These efforts, aligned with RWTH’s Internationalization Strategy, exceed national averages for international student enrollment. The globalizing curriculum prepares students for cross-border collaboration and participation in multinational research networks, reinforcing RWTH’s reputation for attracting diverse academic talent.
+    """,
+    "Research - Excellence Clusters": """
+    RWTH hosts high-profile Excellence Clusters such as the 'Internet of Production', merging Materials Science, Production Engineering, and digital innovation. These collaborative structures enable interdisciplinary breakthroughs and tightly align with societal grand challenges, including Industry 4.0 integration, AI ethics, and sustainable production systems. They exemplify RWTH’s commitment to mission-driven research agendas and positioning within Germany’s top research institutions.
+    """,
+    "Research - Sustainability in Research": """
+    RWTH aligns research priorities with the UN’s Sustainable Development Goals (SDGs) guided by the Stockholm Resilience Center’s 'Wedding Cake' model. Strong sustainability principles place ecological integrity at the foundation for societal well-being and economic stability. Focus areas include SDGs related to health, water, energy, climate action, marine and terrestrial ecosystems, and sustainable cities. Interdisciplinary projects address both immediate environmental challenges and long-term societal transformations.
+    """,
+    "Research - AI and Data Science Initiatives": """
+    Strategic appointments boost RWTH’s capacity in data science and artificial intelligence research. The AI Center catalyzes collaborations across faculties, addressing complex questions in computing, machine learning ethics, and AI applications in education. These investments intertwine fundamental research with teaching innovations, ensuring AI developments benefit both academic knowledge and society.
+    """,
+    "Research - Computational Life Sciences": """
+    RWTH’s Center for Computational Life Sciences merges biology, data science, and engineering to accelerate discoveries in healthcare and bioinformatics. This interdisciplinary structure supports scalable collaborative projects, leveraging computational models and simulations to tackle molecular, cellular, and systems-level challenges with societal implications.
+    """,
+    "Research - Open Science Practices": """
+    RWTH advances open science through shared infrastructures, FAIR data principles, and accessible publication formats. Collaborative platforms and open educational resources extend research reach, enhance reproducibility, and reinforce transparency. These measures democratize access to RWTH’s research outputs and enable inclusive global participation in scientific progress.
+    """,
+    "Infrastructure - Digital Learning Platforms": """
+    RWTH invests in advanced digital infrastructure such as RWTHmoodle, Dynexite, and Learning Analytics systems to enhance both research-led and personalized teaching. The goal is seamless integration across teaching, assessment, and research dissemination, ensuring data-driven optimization of student learning experiences.
+    """,
+    "Infrastructure - Innovation Zones": """
+    Hybrid and experimental learning spaces are integrated into campus design. These innovation zones support student-led projects, interdisciplinary collaboration, and co-creation with industry partners. The campus serves as a living lab, bolstering RWTH’s position as a hub for applied research and societal transformation.
+    """,
+    "Infrastructure - Sustainability in Campus Operations": """
+    RWTH incorporates sustainability goals into infrastructure planning, prioritizing resource efficiency, renewable energy integration, and low-carbon operations. Green buildings, energy-efficient labs, and mobility solutions reflect the ecological priority model. Campus design supports both inclusivity and environmental stewardship.
+    """,
+    "Transfer & Innovation - Technology Transfer": """
+    RWTH transforms lab innovations into market-ready products through targeted technology transfer programs. Patents serve as key indicators of research success, complemented by startup incubation and industry partnerships. These measures embed innovation into RWTH’s economic and societal contributions.
+    """,
+    "Transfer & Innovation - Societal Co-Creation": """
+    Beyond traditional tech transfer, RWTH engages in societal co-creation, involving civic actors in problem-solving for urban development, climate strategies, and public policy. Collaborative models generate responsible innovations that align with community needs and global sustainability.
+    """,
+    "Transfer & Innovation - Entrepreneurship Education": """
+    RWTH fosters inventiveness and entrepreneurial skills through structured programs, competitions, and startup mentoring. These initiatives connect students and researchers to investor networks, translating academic insights into scalable ventures.
+    """,
+    "Diversity & Inclusion - Gender Equality": """
+    RWTH’s diversity strategy outlines clear targets for gender equality in professorships and leadership roles. Institutional frameworks align with Horizon Europe’s gender equality measures, ensuring equitable career pathways and representation.
+    """,
+    "Diversity & Inclusion - Intersectional Diversity": """
+    RWTH embraces diversity beyond gender, considering ethnicity, socio-economic status, disability, and career pathways. Intersectional policies aim to create inclusive environments in learning, research, and administration, strengthening RWTH’s cultural and intellectual breadth.
+    """,
+    "Diversity & Inclusion - Inclusion Action Plan": """
+    The Inclusion Action Plan (2021–2026) addresses accessibility, disability support, and barrier-free participation across RWTH. Investments in infrastructure, resources, and awareness programs ensure a universally inclusive campus experience.
+    """,
+    "Sustainability - Responsible Research Innovation": """
+    RWTH’s Responsible Research Innovation Hub fosters interdisciplinary teams to design sustainable solutions with ecological priority. Collaborative frameworks integrate ethics, inclusivity, and societal impact into research agendas, reinforcing long-term resilience.
+    """,
+    "Sustainability - SDG Integration in Governance": """
+    RWTH embeds SDG priorities into institutional governance, aligning faculty objectives with sustainability benchmarks. Metrics track contributions to climate action, clean energy, and sustainable industry, ensuring accountability and continuous progress.
+    """,
+    "Sustainability - Green Energy Networks": """
+    Research projects at the E.ON Energy Research Center and FEN campus focus on decentralized renewable energy networks, power electronics, and DC technology adoption. These innovations underpin RWTH’s contribution to the European Green Deal’s 2050 targets.
+    """,
+    "Teaching - Honors College": """
+    RWTH’s Honors College nurtures exceptional students through specialized seminars, mentorship, and funding opportunities. By connecting top talent to leading research projects, the program cultivates academic excellence and leadership within the university’s diverse community.
+    """,
+    "Research - Interdisciplinary Integration": """
+    The RWTH strategic framework structures interdisciplinarity through scalable centers, fostering long-term collaborations across engineering, sciences, medicine, and humanities. This integration ensures responsiveness to emerging societal challenges.
+    """,
+    "Transfer & Innovation - International Collaboration": """
+    RWTH strengthens partnerships with institutions in the Global South and European networks, committing to equitable, resilient forms of international cooperation. These relationships enhance diversity in knowledge systems and research impact.
+    """,
+    "Infrastructure - Shared Facilities": """
+    RWTH optimizes access to high-quality shared facilities, including advanced laboratories and collaborative workspaces. Transparent governance structures ensure equitable usage and foster interdisciplinary research efficiency.
+    """,
+    "Teaching - Safe Learning Environments": """
+    Instruments are in place to create safe, inclusive, and equitable learning environments. These acknowledge differences among students and promote respectful engagement, aligning with national and international educational goals.
+    """,
 }
 
 EXTENSIVE_DOCUMENTS = RWTH_DOCUMENTS

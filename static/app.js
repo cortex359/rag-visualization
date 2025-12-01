@@ -11,10 +11,8 @@ class RAGVisualizer {
         this.neighborPoints = [];
         this.allData = [];
         this.showNeighbors = false;
-        this.showLegend = true;
         this.nNeighbors = 5;
         this.queryText = '';
-        this.legendGroup = null;
 
         // Camera movement
         this.cameraVelocity = new THREE.Vector3();
@@ -175,15 +173,6 @@ class RAGVisualizer {
             }
         });
 
-        document.getElementById('toggle-legend-btn').addEventListener('click', () => {
-            this.showLegend = !this.showLegend;
-            const btn = document.getElementById('toggle-legend-btn');
-            btn.classList.toggle('active', this.showLegend);
-            if (this.legendGroup) {
-                this.legendGroup.visible = this.showLegend;
-            }
-        });
-
         document.getElementById('reset-camera-btn').addEventListener('click', () => {
             this.resetCamera();
         });
@@ -213,9 +202,6 @@ class RAGVisualizer {
 
             // Create points
             this.createPoints(data.points);
-
-            // Create legend
-            this.createLegend(uniqueDocs);
 
             // Hide loading
             document.getElementById('loading').style.display = 'none';
@@ -255,26 +241,6 @@ class RAGVisualizer {
         });
     }
 
-    createLegend(uniqueDocs) {
-        this.legendGroup = new THREE.Group();
-
-        uniqueDocs.forEach((doc, i) => {
-            // This is a simple legend - in a real implementation you might want
-            // to render text sprites or use HTML overlay
-            const geometry = new THREE.SphereGeometry(0.15, 16, 16);
-            const material = new THREE.MeshBasicMaterial({
-                color: this.docColors[doc]
-            });
-
-            const sphere = new THREE.Mesh(geometry, material);
-            sphere.position.set(-8, 8 - i * 0.5, 0);
-
-            this.legendGroup.add(sphere);
-        });
-
-        this.scene.add(this.legendGroup);
-        this.legendGroup.visible = this.showLegend;
-    }
 
     async handleQuery() {
         if (this.queryText.length < 3) {
