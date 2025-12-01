@@ -402,9 +402,31 @@ class InteractiveRAG3D:
 
             hover_texts = []
             for i in indices:
-                wrapped = textwrap.fill(self.metadata[i]['text'], width=60)
+                # Create wrapped text with fixed width for consistent display
+                text = self.metadata[i]['text']
+                # Break into lines of ~50 characters at word boundaries
+                words = text.split()
+                lines = []
+                current_line = []
+                current_length = 0
+
+                for word in words:
+                    if current_length + len(word) + 1 > 50 and current_line:
+                        lines.append(' '.join(current_line))
+                        current_line = [word]
+                        current_length = len(word)
+                    else:
+                        current_line.append(word)
+                        current_length += len(word) + 1
+
+                if current_line:
+                    lines.append(' '.join(current_line))
+
+                wrapped = '<br>'.join(lines)
                 hover_texts.append(
-                    f"<b>{self.metadata[i]['document']}</b><br><br>{wrapped}"
+                    f"<b>{self.metadata[i]['document']}</b><br><br>"
+                    f"<span style='display: inline-block; max-width: 400px; white-space: normal;'>"
+                    f"{wrapped}</span>"
                 )
 
             fig.add_trace(go.Scatter3d(
@@ -435,7 +457,7 @@ class InteractiveRAG3D:
                     mode='markers+text',
                     name='Your Query',
                     marker=dict(
-                        size=20,
+                        size=15,
                         color='#FFD700',
                         symbol='diamond',
                         line=dict(width=3, color='#FFA500'),
@@ -443,7 +465,11 @@ class InteractiveRAG3D:
                     text=['QUERY'],
                     textposition='top center',
                     textfont=dict(size=16, color='#FFD700', family='Arial Black'),
-                    hovertext=f"<b>Your Query:</b><br>{query}",
+                    hovertext=(
+                        f"<b>Your Query:</b><br><br>"
+                        f"<span style='display: inline-block; max-width: 400px; white-space: normal;'>"
+                        f"{query}</span>"
+                    ),
                     hovertemplate='%{hovertext}<extra></extra>',
                     showlegend=True
                 ))
@@ -453,6 +479,7 @@ class InteractiveRAG3D:
             template='plotly_dark',
             paper_bgcolor='#0a0a0a',
             plot_bgcolor='#0a0a0a',
+            uirevision='constant',  # Preserve camera angle and zoom while typing
             scene=dict(
                 xaxis=dict(
                     backgroundcolor='#0a0a0a',
@@ -515,8 +542,8 @@ app = dash.Dash(
 app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
-            html.H1(
-                "🔮 Interactive RAG Embedding Visualization",
+            html.H2(
+                "✨ Interactive RAG Embedding Visualization 📚",
                 className="text-center mb-3 mt-3",
                 style={'color': '#00D9FF', 'fontWeight': 'bold'}
             ),

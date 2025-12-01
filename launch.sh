@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Launch script for Interactive RAG 3D Visualizer
 
 echo "======================================"
