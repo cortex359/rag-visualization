@@ -27,15 +27,23 @@ pip install -r requirements.txt
 Launch the real-time interactive visualization:
 
 ```bash
-# Simple launch
+# Simple launch (default: UMAP)
 ./launch.sh
+
+# Or with PCA dimensionality reduction
+./launch.sh --method pca
 
 # Or manually
 source venv/bin/activate
-python interactive_rag_3d.py
+python interactive_rag_3d.py              # Uses UMAP (default)
+python interactive_rag_3d.py --method pca # Uses PCA
 ```
 
 Then open your browser to **http://localhost:8050**
+
+**Dimensionality Reduction Methods:**
+- `--method umap` (default): Non-linear reduction that preserves both local and global structure, better for visualizing semantic clusters
+- `--method pca`: Linear reduction that maximizes variance, faster and more deterministic but may not capture complex relationships as well
 
 **Features:**
 - 🌑 **Dark mode theme** - perfect for presentations

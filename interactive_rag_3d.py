@@ -11,8 +11,10 @@ import plotly.graph_objects as go
 import numpy as np
 from sentence_transformers import SentenceTransformer
 import umap
+from sklearn.decomposition import PCA
 from typing import List, Dict
 import textwrap
+import argparse
 
 # Extensive sample documents for more data points
 EXTENSIVE_DOCUMENTS = {
@@ -320,13 +322,14 @@ EXTENSIVE_DOCUMENTS = {
 class InteractiveRAG3D:
     """Interactive 3D RAG visualization with real-time query embedding"""
 
-    def __init__(self):
+    def __init__(self, reduction_method='umap'):
         self.model = SentenceTransformer('all-MiniLM-L6-v2')
         self.chunks = []
         self.embeddings = None
         self.reduced_embeddings = None
         self.metadata = []
         self.reducer = None
+        self.reduction_method = reduction_method.lower()
 
         # Prepare initial data
         self._prepare_data()
@@ -360,17 +363,24 @@ class InteractiveRAG3D:
         # Generate embeddings
         self.embeddings = self.model.encode(self.chunks, show_progress_bar=True)
 
-        print("Reducing dimensions with UMAP...")
-        # Fit UMAP on document embeddings
-        self.reducer = umap.UMAP(
-            n_components=3,
-            random_state=42,
-            n_neighbors=15,
-            min_dist=0.1,
-            metric='cosine'
-        )
+        print(f"Reducing dimensions with {self.reduction_method.upper()}...")
+
+        # Choose dimensionality reduction method
+        if self.reduction_method == 'pca':
+            self.reducer = PCA(n_components=3, random_state=42)
+        elif self.reduction_method == 'umap':
+            self.reducer = umap.UMAP(
+                n_components=3,
+                random_state=42,
+                n_neighbors=15,
+                min_dist=0.1,
+                metric='cosine'
+            )
+        else:
+            raise ValueError(f"Unknown reduction method: {self.reduction_method}. Use 'umap' or 'pca'.")
+
         self.reduced_embeddings = self.reducer.fit_transform(self.embeddings)
-        print("Data preparation complete!")
+        print(f"Data preparation complete using {self.reduction_method.upper()}!")
 
     def embed_query(self, query: str):
         """Embed a query and transform to 3D space"""
@@ -379,9 +389,45 @@ class InteractiveRAG3D:
 
         query_embedding = self.model.encode([query])
         query_3d = self.reducer.transform(query_embedding)
-        return query_3d[0]
+        return query_3d[0], query_embedding[0]
 
-    def create_3d_plot(self, query: str = ""):
+    def find_nearest_neighbors(self, query: str, n: int = 5):
+        """Find n nearest neighbors to query based on Euclidean distance in 3D space"""
+        if not query or len(query.strip()) < 3:
+            return []
+
+        # Embed and transform query to 3D space
+        query_result = self.embed_query(query)
+        if query_result is None:
+            return []
+
+        query_3d, _ = query_result
+
+        # Calculate Euclidean distances in 3D space
+        distances = np.sqrt(np.sum((self.reduced_embeddings - query_3d) ** 2, axis=1))
+
+        # Get top n indices (smallest distances)
+        nearest_indices = np.argsort(distances)[:n]
+
+        results = []
+        for idx in nearest_indices:
+            # Convert distance to similarity score (closer = higher score)
+            # Using inverse distance normalized to 0-1 range
+            distance = distances[idx]
+            similarity = 1.0 / (1.0 + distance)  # Closer points have higher similarity
+
+            results.append({
+                'index': int(idx),
+                'similarity': float(similarity),
+                'distance': float(distance),
+                'document': self.metadata[idx]['document'],
+                'text': self.metadata[idx]['text']
+            })
+
+        return results
+
+    def create_3d_plot(self, query: str = "", show_neighbors: bool = False,
+                       n_neighbors: int = 5, show_legend: bool = False):
         """Create 3D plotly figure with dark theme"""
 
         # Color mapping for documents
@@ -395,6 +441,12 @@ class InteractiveRAG3D:
         doc_colors = {doc: colors[i % len(colors)] for i, doc in enumerate(unique_docs)}
 
         fig = go.Figure()
+
+        # Find nearest neighbors if query and show_neighbors enabled
+        neighbor_indices = set()
+        if query and len(query.strip()) >= 3 and show_neighbors:
+            neighbors = self.find_nearest_neighbors(query, n_neighbors)
+            neighbor_indices = {n['index'] for n in neighbors}
 
         # Add document chunks
         for doc_name in unique_docs:
@@ -429,27 +481,58 @@ class InteractiveRAG3D:
                     f"{wrapped}</span>"
                 )
 
-            fig.add_trace(go.Scatter3d(
-                x=self.reduced_embeddings[indices, 0],
-                y=self.reduced_embeddings[indices, 1],
-                z=self.reduced_embeddings[indices, 2],
-                mode='markers',
-                name=doc_name,
-                marker=dict(
-                    size=6,
-                    color=doc_colors[doc_name],
-                    line=dict(width=0.5, color='#1a1a1a'),
-                    opacity=0.8
-                ),
-                text=hover_texts,
-                hovertemplate='%{text}<extra></extra>',
-                legendgroup=doc_name,
-            ))
+            # Separate normal points from nearest neighbors
+            normal_indices = [i for i in indices if i not in neighbor_indices]
+            neighbor_in_group = [i for i in indices if i in neighbor_indices]
+
+            # Add normal points
+            if normal_indices:
+                normal_hover = [hover_texts[indices.index(i)] for i in normal_indices]
+                fig.add_trace(go.Scatter3d(
+                    x=self.reduced_embeddings[normal_indices, 0],
+                    y=self.reduced_embeddings[normal_indices, 1],
+                    z=self.reduced_embeddings[normal_indices, 2],
+                    mode='markers',
+                    name=doc_name,
+                    marker=dict(
+                        size=6,
+                        color=doc_colors[doc_name],
+                        line=dict(width=0.5, color='#1a1a1a'),
+                        opacity=0.8 if not show_neighbors else 0.3
+                    ),
+                    text=normal_hover,
+                    hovertemplate='%{text}<extra></extra>',
+                    legendgroup=doc_name,
+                    showlegend=show_legend
+                ))
+
+            # Add nearest neighbor points (highlighted)
+            if neighbor_in_group:
+                neighbor_hover = [hover_texts[indices.index(i)] for i in neighbor_in_group]
+                fig.add_trace(go.Scatter3d(
+                    x=self.reduced_embeddings[neighbor_in_group, 0],
+                    y=self.reduced_embeddings[neighbor_in_group, 1],
+                    z=self.reduced_embeddings[neighbor_in_group, 2],
+                    mode='markers',
+                    name=f'{doc_name} (Neighbor)',
+                    marker=dict(
+                        size=12,
+                        color='#FF00FF',  # Bright magenta for neighbors
+                        line=dict(width=2, color='#FFFFFF'),
+                        opacity=1.0,
+                        symbol='circle'
+                    ),
+                    text=neighbor_hover,
+                    hovertemplate='%{text}<extra></extra>',
+                    legendgroup=doc_name,
+                    showlegend=False
+                ))
 
         # Add query point if exists
         if query and len(query.strip()) >= 3:
-            query_3d = self.embed_query(query)
-            if query_3d is not None:
+            result = self.embed_query(query)
+            if result is not None:
+                query_3d, _ = result
                 fig.add_trace(go.Scatter3d(
                     x=[query_3d[0]],
                     y=[query_3d[1]],
@@ -480,7 +563,10 @@ class InteractiveRAG3D:
             paper_bgcolor='#0a0a0a',
             plot_bgcolor='#0a0a0a',
             uirevision='constant',  # Preserve camera angle and zoom while typing
+            modebar={'orientation': 'v'},  # Vertical modebar
+            dragmode='orbit',  # Default to orbit mode
             scene=dict(
+                dragmode='orbit',  # Keep scene in orbit mode by default
                 xaxis=dict(
                     backgroundcolor='#0a0a0a',
                     gridcolor='#2a2a2a',
@@ -524,12 +610,33 @@ class InteractiveRAG3D:
         return fig
 
 
+# Parse command-line arguments
+parser = argparse.ArgumentParser(
+    description='Interactive 3D RAG Embedding Visualizer',
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    epilog="""
+Examples:
+  python interactive_rag_3d.py --method umap    # Use UMAP (default)
+  python interactive_rag_3d.py --method pca     # Use PCA
+    """
+)
+parser.add_argument(
+    '--method',
+    type=str,
+    choices=['umap', 'pca'],
+    default='umap',
+    help='Dimensionality reduction method: "umap" for UMAP (default) or "pca" for PCA'
+)
+
+args = parser.parse_args()
+
 # Initialize the app
 print("\n" + "=" * 60)
 print("Initializing Interactive 3D RAG Visualizer...")
+print(f"Using dimensionality reduction method: {args.method.upper()}")
 print("=" * 60 + "\n")
 
-rag_viz = InteractiveRAG3D()
+rag_viz = InteractiveRAG3D(reduction_method=args.method)
 
 # Create Dash app
 app = dash.Dash(
@@ -540,6 +647,17 @@ app = dash.Dash(
 
 # App layout
 app.layout = dbc.Container([
+    # Hidden div for keyboard events
+    html.Div(id='keyboard-listener', tabIndex=0, style={
+        'position': 'fixed', 'top': 0, 'left': 0, 'width': '100%', 'height': '100%',
+        'zIndex': -1, 'outline': 'none'
+    }),
+
+    # Store components for state
+    dcc.Store(id='camera-state'),
+    dcc.Store(id='show-neighbors-state', data=False),
+    dcc.Store(id='show-legend-state', data=False),
+
     dbc.Row([
         dbc.Col([
             html.H2(
@@ -558,7 +676,7 @@ app.layout = dbc.Container([
                     id='query-input',
                     placeholder='Type your search query here... (real-time embedding)',
                     type='text',
-                    debounce=False,  # No debounce for real-time
+                    debounce=False,
                     style={
                         'backgroundColor': '#1a1a1a',
                         'color': '#ffffff',
@@ -566,8 +684,48 @@ app.layout = dbc.Container([
                         'fontSize': '18px'
                     }
                 ),
-            ], className="mb-3"),
+            ], className="mb-2"),
         ], width=12)
+    ]),
+
+    # Control panel
+    dbc.Row([
+        dbc.Col([
+            dbc.ButtonGroup([
+                dbc.Button(
+                    "🎯 Show Neighbors",
+                    id='toggle-neighbors-btn',
+                    color="primary",
+                    size="sm",
+                    outline=True,
+                    style={'fontSize': '13px'}
+                ),
+                dbc.Button(
+                    "📋 Toggle Legend",
+                    id='toggle-legend-btn',
+                    color="secondary",
+                    size="sm",
+                    outline=True,
+                    style={'fontSize': '13px'}
+                ),
+            ], className="mb-2"),
+        ], width="auto"),
+        dbc.Col([
+            html.Div([
+                html.Span("N neighbors:", style={'color': '#888', 'fontSize': '13px', 'marginRight': '10px', 'flexShrink': '0'}),
+                html.Div([
+                    dcc.Slider(
+                        id='n-neighbors-slider',
+                        min=3,
+                        max=15,
+                        step=1,
+                        value=5,
+                        marks={i: str(i) for i in range(3, 16, 3)},
+                        tooltip={"placement": "bottom", "always_visible": False},
+                    ),
+                ], style={'flex': '1', 'minWidth': '200px'})
+            ], style={'display': 'flex', 'alignItems': 'center', 'width': '100%', 'gap': '10px'})
+        ], width=5),
     ]),
 
     dbc.Row([
@@ -581,31 +739,46 @@ app.layout = dbc.Container([
     ]),
 
     dbc.Row([
+        # Main 3D plot
         dbc.Col([
             dcc.Graph(
                 id='3d-plot',
-                style={'height': '80vh'},
+                style={'height': '75vh'},
                 config={
                     'displayModeBar': True,
                     'displaylogo': False,
-                    'modeBarButtonsToRemove': ['select2d', 'lasso2d']
+                    'modeBarButtonsToRemove': ['select2d', 'lasso2d'],
+                    'toImageButtonOptions': {
+                        'format': 'png',
+                        'filename': 'rag_visualization',
+                        'height': 1080,
+                        'width': 1920,
+                        'scale': 2
+                    }
                 }
             )
-        ], width=12)
+        ], id='plot-column', width=12),
+
+        # Sidebar for nearest neighbors (conditional)
+        dbc.Col([
+            html.Div(id='neighbors-sidebar', style={
+                'backgroundColor': '#1a1a1a',
+                'padding': '15px',
+                'borderRadius': '8px',
+                'height': '75vh',
+                'overflowY': 'auto',
+                'border': '1px solid #444'
+            })
+        ], id='sidebar-column', width=4, style={'display': 'none'})
     ]),
 
     dbc.Row([
         dbc.Col([
             html.Div([
                 html.P(
-                    f"📊 {len(rag_viz.chunks)} document chunks embedded in 3D semantic space",
+                    f"📊 {len(rag_viz.chunks)} chunks | ⌨️  Keyboard: W/S (forward/back), A/D (left/right), Q/E (up/down), Arrow keys (rotate)",
                     className="text-center mb-1",
-                    style={'color': '#888', 'fontSize': '13px'}
-                ),
-                html.P(
-                    "💡 Tip: Type in the search box to see your query embedded in real-time!",
-                    className="text-center",
-                    style={'color': '#888', 'fontSize': '13px'}
+                    style={'color': '#888', 'fontSize': '12px'}
                 ),
             ])
         ], width=12)
@@ -614,23 +787,278 @@ app.layout = dbc.Container([
 ], fluid=True, style={'backgroundColor': '#0a0a0a', 'minHeight': '100vh'})
 
 
+# Callback for toggling neighbors state
+@app.callback(
+    Output('show-neighbors-state', 'data'),
+    Input('toggle-neighbors-btn', 'n_clicks'),
+    State('show-neighbors-state', 'data'),
+    prevent_initial_call=True
+)
+def toggle_neighbors(n_clicks, current_state):
+    return not current_state
+
+
+# Callback for toggling legend state
+@app.callback(
+    Output('show-legend-state', 'data'),
+    Input('toggle-legend-btn', 'n_clicks'),
+    State('show-legend-state', 'data'),
+    prevent_initial_call=True
+)
+def toggle_legend(n_clicks, current_state):
+    return not current_state
+
+
+# Main callback for updating plot and info
 @app.callback(
     [Output('3d-plot', 'figure'),
-     Output('query-info', 'children')],
-    [Input('query-input', 'value')]
+     Output('query-info', 'children'),
+     Output('neighbors-sidebar', 'children'),
+     Output('toggle-neighbors-btn', 'outline'),
+     Output('toggle-legend-btn', 'outline'),
+     Output('plot-column', 'width'),
+     Output('sidebar-column', 'style')],
+    [Input('query-input', 'value'),
+     Input('show-neighbors-state', 'data'),
+     Input('show-legend-state', 'data'),
+     Input('n-neighbors-slider', 'value')],
+    [State('3d-plot', 'relayoutData')]
 )
-def update_plot(query):
-    """Update plot with query embedding in real-time"""
-    fig = rag_viz.create_3d_plot(query if query else "")
+def update_visualization(query, show_neighbors, show_legend, n_neighbors, relayout_data):
+    """Update plot, info, and sidebar with query embedding in real-time"""
 
+    # Create figure with current settings
+    fig = rag_viz.create_3d_plot(
+        query if query else "",
+        show_neighbors=show_neighbors,
+        n_neighbors=n_neighbors,
+        show_legend=show_legend
+    )
+
+    # Preserve camera position if it exists in relayout_data
+    # This ensures camera state is maintained across all updates including dragmode changes
+    if relayout_data:
+        # First check for complete camera object
+        if 'scene.camera' in relayout_data:
+            fig.update_layout(scene_camera=relayout_data['scene.camera'])
+        else:
+            # Build camera from individual properties if available
+            camera_update = {}
+
+            # Eye position (camera location)
+            if 'scene.camera.eye.x' in relayout_data:
+                camera_update['eye'] = {
+                    'x': relayout_data.get('scene.camera.eye.x', 1.5),
+                    'y': relayout_data.get('scene.camera.eye.y', 1.5),
+                    'z': relayout_data.get('scene.camera.eye.z', 1.3)
+                }
+
+            # Center position (where camera is looking)
+            if 'scene.camera.center.x' in relayout_data:
+                camera_update['center'] = {
+                    'x': relayout_data.get('scene.camera.center.x', 0),
+                    'y': relayout_data.get('scene.camera.center.y', 0),
+                    'z': relayout_data.get('scene.camera.center.z', 0)
+                }
+
+            # Up vector (camera orientation)
+            if 'scene.camera.up.x' in relayout_data:
+                camera_update['up'] = {
+                    'x': relayout_data.get('scene.camera.up.x', 0),
+                    'y': relayout_data.get('scene.camera.up.y', 0),
+                    'z': relayout_data.get('scene.camera.up.z', 1)
+                }
+
+            # Projection settings
+            if 'scene.camera.projection.type' in relayout_data:
+                camera_update['projection'] = {
+                    'type': relayout_data.get('scene.camera.projection.type', 'perspective')
+                }
+
+            if camera_update:
+                fig.update_layout(scene_camera=camera_update)
+
+        # Preserve dragmode if it changed
+        if 'dragmode' in relayout_data or 'scene.dragmode' in relayout_data:
+            dragmode = relayout_data.get('dragmode') or relayout_data.get('scene.dragmode', 'orbit')
+            fig.update_layout(dragmode=dragmode, scene_dragmode=dragmode)
+
+    # Update info text
     if query and len(query.strip()) >= 3:
-        info = f"✨ Query embedded: '{query}' - Watch the golden diamond in 3D space!"
+        if show_neighbors:
+            info = f"✨ Query: '{query}' | Showing top {n_neighbors} nearest neighbors in magenta"
+        else:
+            info = f"✨ Query embedded: '{query}' - Watch the golden diamond in 3D space!"
     elif query and len(query.strip()) < 3:
         info = "⏳ Type at least 3 characters to embed your query..."
     else:
         info = "💬 Start typing to see real-time query embedding..."
 
-    return fig, info
+    # Update neighbors sidebar
+    sidebar_content = []
+    if query and len(query.strip()) >= 3 and show_neighbors:
+        neighbors = rag_viz.find_nearest_neighbors(query, n_neighbors)
+
+        sidebar_content.append(html.H5(
+            f"Top {n_neighbors} Nearest Neighbors",
+            style={'color': '#00D9FF', 'marginBottom': '15px'}
+        ))
+
+        for i, neighbor in enumerate(neighbors, 1):
+            similarity_pct = neighbor['similarity'] * 100
+            distance = neighbor.get('distance', 0)
+
+            sidebar_content.append(html.Div([
+                html.Div([
+                    html.Strong(f"#{i}", style={'color': '#FF00FF', 'marginRight': '8px'}),
+                    html.Span(f"{similarity_pct:.1f}% similar", style={'color': '#888', 'fontSize': '12px'}),
+                    html.Span(f" • ", style={'color': '#444', 'fontSize': '12px', 'margin': '0 4px'}),
+                    html.Span(f"dist: {distance:.2f}", style={'color': '#666', 'fontSize': '11px'})
+                ], style={'marginBottom': '5px'}),
+                html.Div(
+                    neighbor['document'],
+                    style={'color': '#00D9FF', 'fontSize': '13px', 'fontWeight': 'bold', 'marginBottom': '5px'}
+                ),
+                html.Div(
+                    neighbor['text'][:200] + ('...' if len(neighbor['text']) > 200 else ''),
+                    style={'color': '#ccc', 'fontSize': '12px', 'marginBottom': '15px', 'lineHeight': '1.4'}
+                ),
+                html.Hr(style={'borderColor': '#333', 'margin': '15px 0'})
+            ]))
+    else:
+        sidebar_content.append(html.Div([
+            html.H5("Nearest Neighbors", style={'color': '#888', 'marginBottom': '15px'}),
+            html.P(
+                "Type a query and click 'Show Neighbors' to see the most similar document chunks.",
+                style={'color': '#666', 'fontSize': '13px', 'textAlign': 'center', 'marginTop': '50px'}
+            )
+        ]))
+
+    # Button outline states (False = filled, True = outline)
+    neighbors_btn_outline = not show_neighbors
+    legend_btn_outline = not show_legend
+
+    # Control column widths and sidebar visibility based on show_neighbors
+    if show_neighbors:
+        plot_width = 8
+        sidebar_style = {
+            'backgroundColor': '#1a1a1a',
+            'padding': '15px',
+            'borderRadius': '8px',
+            'height': '75vh',
+            'overflowY': 'auto',
+            'border': '1px solid #444',
+            'display': 'block'
+        }
+    else:
+        plot_width = 12
+        sidebar_style = {'display': 'none'}
+
+    return fig, info, sidebar_content, neighbors_btn_outline, legend_btn_outline, plot_width, sidebar_style
+
+
+# Clientside callback for keyboard navigation
+app.clientside_callback(
+    """
+    function(id) {
+        // Camera movement parameters
+        const moveSpeed = 0.3;
+        const rotateSpeed = 0.1;
+
+        // Get the 3D plot element
+        const plotDiv = document.getElementById('3d-plot');
+        if (!plotDiv || !plotDiv.layout || !plotDiv.layout.scene) {
+            return window.dash_clientside.no_update;
+        }
+
+        // Listen for keyboard events
+        document.addEventListener('keydown', function(event) {
+            if (!plotDiv.layout.scene.camera) return;
+
+            const camera = JSON.parse(JSON.stringify(plotDiv.layout.scene.camera));
+            const eye = camera.eye || {x: 1.5, y: 1.5, z: 1.3};
+
+            // Check if user is typing in an input field
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            let updated = false;
+
+            switch(event.key.toLowerCase()) {
+                // Forward/Backward
+                case 'w':
+                    eye.z -= moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 's':
+                    eye.z += moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+
+                // Left/Right
+                case 'a':
+                    eye.x -= moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 'd':
+                    eye.x += moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+
+                // Up/Down
+                case 'q':
+                    eye.y += moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 'e':
+                    eye.y -= moveSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+
+                // Rotation with arrow keys
+                case 'arrowup':
+                    eye.y += rotateSpeed;
+                    eye.z -= rotateSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 'arrowdown':
+                    eye.y -= rotateSpeed;
+                    eye.z += rotateSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 'arrowleft':
+                    eye.x -= rotateSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+                case 'arrowright':
+                    eye.x += rotateSpeed;
+                    updated = true;
+                    event.preventDefault();
+                    break;
+            }
+
+            if (updated) {
+                camera.eye = eye;
+                Plotly.relayout(plotDiv, {'scene.camera': camera});
+            }
+        });
+
+        return window.dash_clientside.no_update;
+    }
+    """,
+    Output('keyboard-listener', 'children'),
+    Input('keyboard-listener', 'id')
+)
 
 
 if __name__ == '__main__':

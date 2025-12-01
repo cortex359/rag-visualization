@@ -15,4 +15,5 @@ echo ""
 echo "Press Ctrl+C to stop the server"
 echo ""
 
-python interactive_rag_3d.py
+# Pass all arguments to Python script (supports --method umap or --method pca)
+python interactive_rag_3d.py "$@"
