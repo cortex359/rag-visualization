@@ -22,7 +22,37 @@ pip install -r requirements.txt
 
 ## Quick Start
 
-### Option 1: Interactive 3D Web App (Recommended for Presentations)
+You have **two visualization options**:
+
+### Option 1: Three.js Version (NEW - Best Performance & Control!)
+
+**Recommended for presentations** - Full camera control, smooth interactions, no resets!
+
+Launch the Three.js visualization:
+
+```bash
+# Simple launch (default: UMAP)
+./launch_threejs.sh
+
+# Or with PCA
+./launch_threejs.sh --method pca
+
+# Or manually
+source venv/bin/activate
+python server.py              # Uses UMAP (default, port 5000)
+python server.py --method pca --port 5000
+```
+
+Then open your browser to **http://localhost:5000**
+
+**Why Three.js is better:**
+- ✅ **Perfect camera control** - No unexpected resets
+- ✅ **Smooth keyboard navigation** - WASD, QE, Arrow keys work flawlessly
+- ✅ **Better performance** - Native WebGL rendering
+- ✅ **Professional look** - Glow effects, smooth animations
+- ✅ **Full control** - Mouse orbit, zoom, all interactions work perfectly
+
+### Option 2: Dash/Plotly Version (Original)
 
 Launch the real-time interactive visualization:
 

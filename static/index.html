@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive RAG 3D Visualizer - Three.js</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        #ui {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0) 100%);
+            pointer-events: none;
+        }
+
+        #ui > * {
+            pointer-events: auto;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #00D9FF;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 0 auto 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #query-input {
+            flex: 1;
+            padding: 12px 20px;
+            font-size: 16px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #query-input:focus {
+            border-color: #00D9FF;
+        }
+
+        .controls {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 14px;
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid #444;
+            border-radius: 6px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: rgba(50, 50, 50, 0.9);
+            border-color: #00D9FF;
+        }
+
+        button.active {
+            background: #00D9FF;
+            border-color: #00D9FF;
+            color: #0a0a0a;
+            font-weight: bold;
+        }
+
+        .slider-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #444;
+        }
+
+        .slider-group label {
+            font-size: 13px;
+            color: #888;
+            white-space: nowrap;
+        }
+
+        .slider-group input[type="range"] {
+            width: 150px;
+        }
+
+        .slider-group span {
+            font-size: 13px;
+            color: #00D9FF;
+            min-width: 25px;
+            text-align: center;
+        }
+
+        #info {
+            text-align: center;
+            color: #00D9FF;
+            font-size: 14px;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
+        #sidebar {
+            position: absolute;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: rgba(26, 26, 26, 0.95);
+            border-left: 1px solid #444;
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        #sidebar.visible {
+            right: 0;
+        }
+
+        #sidebar h3 {
+            color: #00D9FF;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .neighbor-item {
+            background: rgba(10, 10, 10, 0.5);
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+
+        .neighbor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .neighbor-rank {
+            color: #FF00FF;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .neighbor-similarity {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .neighbor-doc {
+            color: #00D9FF;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .neighbor-text {
+            color: #ccc;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        #help {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-size: 12px;
+            color: #888;
+            max-width: 300px;
+        }
+
+        #help h4 {
+            color: #00D9FF;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        #help ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #help li {
+            margin-bottom: 5px;
+        }
+
+        #stats {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            font-size: 11px;
+            color: #666;
+        }
+
+        #tooltip {
+            position: absolute;
+            display: none;
+            background: rgba(26, 26, 26, 0.95);
+            border: 1px solid #00D9FF;
+            border-radius: 8px;
+            padding: 12px;
+            pointer-events: none;
+            max-width: 300px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        #tooltip .tooltip-doc {
+            color: #00D9FF;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        #tooltip .tooltip-text {
+            color: #ccc;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 24px;
+            color: #00D9FF;
+        }
+
+        .spinner {
+            border: 3px solid rgba(0, 217, 255, 0.1);
+            border-top: 3px solid #00D9FF;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="canvas-container"></div>
+
+        <div id="loading">
+            <div class="spinner"></div>
+            <div>Loading embeddings...</div>
+        </div>
+
+        <div id="ui">
+            <div class="title">✨ Interactive RAG Embedding Visualization 📚</div>
+
+            <div class="search-box">
+                <input type="text" id="query-input" placeholder="Type your search query here... (real-time embedding)" autocomplete="off">
+            </div>
+
+            <div class="controls">
+                <button id="show-neighbors-btn">🎯 Show Neighbors</button>
+                <button id="toggle-legend-btn">📋 Toggle Legend</button>
+                <button id="reset-camera-btn">🔄 Reset Camera</button>
+
+                <div class="slider-group">
+                    <label>N neighbors:</label>
+                    <input type="range" id="n-neighbors-slider" min="3" max="15" value="5" step="1">
+                    <span id="n-neighbors-value">5</span>
+                </div>
+            </div>
+
+            <div id="info">💬 Start typing to see real-time query embedding...</div>
+        </div>
+
+        <div id="sidebar">
+            <h3>Nearest Neighbors</h3>
+            <div id="neighbors-list">
+                <p style="color: #666; font-size: 13px; text-align: center; margin-top: 50px;">
+                    Type a query and click "Show Neighbors"
+                </p>
+            </div>
+        </div>
+
+        <div id="help">
+            <h4>⌨️ Keyboard Controls</h4>
+            <ul>
+                <li><strong>W/S:</strong> Move forward/back</li>
+                <li><strong>A/D:</strong> Move left/right</li>
+                <li><strong>Q/E:</strong> Move up/down</li>
+                <li><strong>Arrow keys:</strong> Rotate camera</li>
+                <li><strong>Mouse drag:</strong> Orbit view</li>
+                <li><strong>Scroll:</strong> Zoom in/out</li>
+            </ul>
+        </div>
+
+        <div id="stats">
+            FPS: <span id="fps">0</span> | Points: <span id="point-count">0</span>
+        </div>
+
+        <div id="tooltip">
+            <div class="tooltip-doc"></div>
+            <div class="tooltip-text"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
