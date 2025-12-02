@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Documentation
+*.md
+!README.md
+
+# Output files
+*.html
+!static/*.html
+*.png
+*.jpg
+
+# Notebooks
+*.ipynb
+
+# Shell scripts (not needed in container)
+*.sh
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Other
+.DS_Store

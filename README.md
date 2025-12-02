@@ -16,7 +16,27 @@ Interactive 3D visualization of document chunk embeddings in semantic space for 
 
 ## Installation
 
+### 🐳 Docker (Recommended - Easiest Setup)
+
+**Fastest way to get started:**
+
 ```bash
+# Launch Three.js version with UMAP
+docker-compose up threejs-umap
+
+# Access at http://localhost:5000
+```
+
+📘 See [DOCKER.md](DOCKER.md) for complete Docker documentation.
+
+### 💻 Local Installation
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 

@@ -1,0 +1,37 @@
+services:
+  # Three.js version with UMAP (recommended)
+  threejs-umap:
+    build: .
+    container_name: rag-visualizer-threejs-umap
+    ports:
+      - "5000:5000"
+    command: python server.py --method umap --port 5000
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/data"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Dash version with UMAP
+  dash-umap:
+    build: .
+    container_name: rag-visualizer-dash-umap
+    ports:
+      - "8050:8050"
+    command: python interactive_rag_3d.py --method umap
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    profiles:
+      - dash
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8050"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
