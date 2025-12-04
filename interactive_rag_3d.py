@@ -47,32 +47,32 @@ SAMPLE_DOCUMENTS = {
     models for new tasks. Hyperparameter tuning optimizes model architecture and training settings.
     """,
 
-    "Cooking - Italian Pasta": """
-    Cooking perfect pasta requires attention to detail and timing. Start by bringing a large
-    pot of salted water to a rolling boil. Use about 4-6 quarts of water per pound of pasta.
-    Add the pasta and stir immediately to prevent sticking. Cook according to package directions,
-    but taste a minute or two before the suggested time. Perfect pasta should be al dente,
-    meaning it has a slight bite to it. Always reserve a cup of pasta water before draining.
-    This starchy water is essential for creating silky sauces. Fresh pasta cooks in 2-3 minutes.
-    """,
-
-    "Cooking - Sauces": """
-    Carbonara is made with eggs, pecorino cheese, guanciale, and black pepper. The heat from
-    the pasta cooks the eggs to create a creamy sauce. Marinara sauce combines tomatoes, garlic,
-    olive oil, and fresh basil. Simmer for 20-30 minutes to develop flavors. Aglio e olio is
-    a simple dish with garlic, olive oil, and chili flakes. Pesto uses fresh basil, pine nuts,
-    parmesan, garlic, and olive oil blended until smooth. Bolognese is a meat-based sauce
-    that simmers for hours. Arrabbiata adds red chili peppers for heat.
-    """,
-
-    "Cooking - Techniques": """
-    Sautéing involves cooking food quickly in a small amount of fat over high heat. Braising
-    combines searing with slow cooking in liquid. Roasting uses dry heat in an oven to caramelize
-    sugars and develop flavor. Blanching briefly boils vegetables then plunges them into ice
-    water to preserve color. Deglazing uses liquid to lift browned bits from the pan bottom.
-    Emulsification combines oil and water-based ingredients. Reduction concentrates flavors
-    by evaporating liquid. Mise en place means preparing all ingredients before cooking begins.
-    """,
+#    "Cooking - Italian Pasta": """
+#    Cooking perfect pasta requires attention to detail and timing. Start by bringing a large
+#    pot of salted water to a rolling boil. Use about 4-6 quarts of water per pound of pasta.
+#    Add the pasta and stir immediately to prevent sticking. Cook according to package directions,
+#    but taste a minute or two before the suggested time. Perfect pasta should be al dente,
+#    meaning it has a slight bite to it. Always reserve a cup of pasta water before draining.
+#    This starchy water is essential for creating silky sauces. Fresh pasta cooks in 2-3 minutes.
+#    """,
+#
+#    "Cooking - Sauces": """
+#    Carbonara is made with eggs, pecorino cheese, guanciale, and black pepper. The heat from
+#    the pasta cooks the eggs to create a creamy sauce. Marinara sauce combines tomatoes, garlic,
+#    olive oil, and fresh basil. Simmer for 20-30 minutes to develop flavors. Aglio e olio is
+#    a simple dish with garlic, olive oil, and chili flakes. Pesto uses fresh basil, pine nuts,
+#    parmesan, garlic, and olive oil blended until smooth. Bolognese is a meat-based sauce
+#    that simmers for hours. Arrabbiata adds red chili peppers for heat.
+#    """,
+#
+#    "Cooking - Techniques": """
+#    Sautéing involves cooking food quickly in a small amount of fat over high heat. Braising
+#    combines searing with slow cooking in liquid. Roasting uses dry heat in an oven to caramelize
+#    sugars and develop flavor. Blanching briefly boils vegetables then plunges them into ice
+#    water to preserve color. Deglazing uses liquid to lift browned bits from the pan bottom.
+#    Emulsification combines oil and water-based ingredients. Reduction concentrates flavors
+#    by evaporating liquid. Mise en place means preparing all ingredients before cooking begins.
+#    """,
 
     "Climate Change - Causes": """
     Climate change refers to long-term shifts in global temperatures and weather patterns.
@@ -315,8 +315,90 @@ SAMPLE_DOCUMENTS = {
     central database. Voting systems ensure transparent elections. Healthcare records maintain
     patient data securely. Real estate transfers simplify property transactions. Intellectual
     property protects creative works. Financial services settle transactions faster and cheaper.
+    """,
+
+
+    "Teaching - Digitalization Strategy for Learning": """
+    RWTH’s teaching strategy blends research‑oriented, practice‑based curricula with extensive digital
+    formats to support flexible, individualized and international learning. The Center for Teaching and 
+    Learning Services (CLS) provides institution‑wide support—video production, e‑exams, tutorials and 
+    didactic certification—while learning analytics and open educational resources extend research into 
+    teaching. New initiatives like “RWTH: Together University” (student co‑creation, microlearning, AI 
+    integration) and the national CampusConnect consortium aim to scale interdisciplinary, practice‑focused 
+    formats and mutual recognition across institutions. Faculty development, modular microcredentials and 
+    lifelong‑learning pathways are prioritized to close gaps in digital and AI competences and to reduce 
+    late‑stage dropouts. RWTH couples strong digital infrastructure with quality management and internationalization
+    to foster inclusive, competence‑oriented education that links early research engagement, sustainability 
+    and industry transfer.
+    """,
+
+    "Artificial Intelligence - Interdisciplinarity Research": """
+    AI at RWTH is a key example of interdisciplinarity inspired by interweaving methodical
+    expertise in the original domain with application throughout other disciplines. It is a strategic
+    direction resulting from our EXU strategy in the creation of new, bridging research groups
+    across most faculties. As a pivotal milestone in our AI strategy, we founded the AI Center in 2021, which connects
+    over 100 professorships. The AI Center focuses on safe, dependable, and sustainable
+    AI methods, reflecting the European values of human-centred and trustworthy AI. A
+    wide range of research projects illustrates the breadth and quality of AI achieved across
+    disciplines: from foundational work – such as explainable AI, provable machine learning, and
+    graph-based models (Heinz Maier-Leibnitz Prize for Christopher Morris) – to dependable
+    machine learning in mathematics (CRC 1481), sustainable technologies and construction
+    (CoEs FSC² and CARE), energy-efficient hardware for AI (C4F NeuroSys), AI in robotics
+    (Robotics Institute Germany), AI in medical diagnostics (EU Horizon project ODELIA), and
+    AI at the human-machine interface (AvH professorship for Heike Vallery). Linking research
+    and teaching, we equip our students with the skills to apply AI responsibly and effectively.
+    As a technology driving societal change, the outreach and impact of AI are equally important
+    to us. Through events like our biennial “AI Week” (M8), we disseminate the latest progress
+    in AI and facilitate meaningful collaborations with industry. In partnership with FZJ, we are
+    evolving into a national hub for AI through the recently granted JUPITER AI Factory, forming
+    the basis of further expansion and networking at the European level.
+    """,
+
+    "Excellence Initiative - Integrated Interdisciplinary University of Science and Technology": """
+    The Excellence Initiative and Strategy have enabled RWTH Aachen University to pursue
+    and achieve a fundamental institutional transformation. Starting out as a leading university
+    with strong engineering sciences, we have evolved into an Integrated Interdisciplinary
+    University of Science and Technology. RWTH has become a place where academic
+    excellence, innovation, and societal responsibility converge. We have fostered a university
+    culture that is open, diverse, adaptive, and capable of strategic renewal. Our structures,
+    partnerships, and people are aligned to deliver on our core ambition: create knowledge that
+    matters – for science and society.
+    """,
+
+    "Sustainability - Responsible Research Innovation":
     """
+    RWTH actively integrates Responsible Research and Innovation (RRI) principles to align scientific
+     activity with societal needs, fostering “science for society, with society” through participatory
+     formats and the RRI Hub which connects technical research with citizen perspectives. The university
+     promotes interdisciplinary, transdisciplinary projects—e.g., Built and Lived Environment and Fuel
+     Science Center—that foreground societal impacts and ethical reflection while training students in
+     design thinking and RRI-related courses. RWTH supports collaborative platforms, public dialogues 
+     (Kármán Conference) and incubators (Bio4MatPro) to translate research into responsible innovations 
+     and policy-relevant applications, and embeds RRI into teaching and cluster strategies to ensure 
+     research trajectories remain socially responsive and ethically guided.
+    """,
+
+    "Sustainability - SDG Integration in Governance":
+    """
+    Since adopting a Sustainability Mission Statement (2021) and a participatory Sustainability Strategy and Roadmap (approved 2023), RWTH has committed to weave the UN SDGs into governance, teaching, research and operations with measurable targets and indicators to 2030. A central Sustainability and University Governance unit (est. 2020) coordinates campus-wide efforts and stakeholder participation via GreenTeams, workshops and biannual sustainability reporting to increase transparency and accountability. Teaching initiatives—SDG Campus, special awards, curriculum reviews and UROP—aim to embed SDG-related competencies across degree programs; self-assessments show all 17 SDGs appear in curricula with emphases on SDG7, SDG13 and SDG9, while monitoring and systematic reviews are planned to close gaps.
+    """,
+
+    "Diversity Strategy - Institutional Roadmap":
+    """
+    RWTH's Diversity Strategy (2022–2027) frames equal opportunity and diversity as prerequisites for excellence and sets four action fields: opening the university, driving cultural change, life-phase-oriented HR policy, and building gender & diversity competencies. The strategy was adopted by Senate and developed participatorily, linking objectives to measurable measures and monitoring plans . Implementation is supported centrally by the Vice‑Rector for Human Resources and the Rectorate staff unit IGaD, with coordination across faculties and units to align target agreements and ensure long-term resources. The strategy explicitly connects to RWTH’s Code of Values, Inclusion Action Plan 2021–2026, and sustainability commitments, and foresees a Diversity Monitoring roadmap to collect core dimensions of diversity and survey experienced discrimination to inform targeted measures. Institutional visibility is increased via the ReaDy@RWTH project and awareness campaigns to make diversity goals tangible across campus.
+    """,
+
+    "RWTH Sustainability Strategy": """
+    RWTH organizes sustainability across research, teaching & learning, governance, and campus operations and has set short-, medium- (2028) and long-term (2033) targets to drive progress. The university emphasizes climate action and aims for a climate‑neutral campus within defined system limits. Many measures—like green electricity purchasing and awareness campaigns—are part of the roadmap.
+    """,
+
+    "Climate‑neutral Campus & Operations": """
+    RWTH committed to becoming climate‑neutral and has reduced energy use and CO2 emissions through measures such as green electricity purchases and energy-efficiency projects; campus operational actions include smarter building management and behavioral awareness. Heat‑pumps, cold‑heat networks and optimized building energy concepts (e.g., Campus Melaten studies) are among practical measures.
+    """,
 }
+
+
+
 
 RWTH_DOCUMENTS = {
     "Teaching - Research-Oriented Curriculum": """
@@ -402,7 +484,7 @@ RWTH_DOCUMENTS = {
     """,
 }
 
-EXTENSIVE_DOCUMENTS = RWTH_DOCUMENTS
+EXTENSIVE_DOCUMENTS = SAMPLE_DOCUMENTS
 
 class InteractiveRAG3D:
     """Interactive 3D RAG visualization with real-time query embedding"""
